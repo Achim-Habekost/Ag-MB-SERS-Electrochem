@@ -34,9 +34,6 @@ Open Windows PowerShell in that directory and run:
 
 ```powershell
 $parts = @("rman_a.zip.part1", "rman_a.zip.part2")
-```
-
-$parts = @("rman_a.zip.part1", "rman_a.zip.part2")
 $out = [IO.File]::Create("rman_a.zip")
 try {
     foreach ($part in $parts) {
@@ -52,5 +49,6 @@ try {
 finally {
     $out.Dispose()
 }
+```
 
 The resulting rman_a.zip can then be extracted to restore the original rman_a file.
