@@ -6,13 +6,13 @@ The original calculation output is retained, including its warning about a negat
 
 The alpha and beta orbital files are provided separately as ZIP archives and must be extracted before reuse.
 
-##Archived calculation files
+# Archived calculation files
 
 The archive contains the TURBOMOLE input and output files for the Ag40–MB+ triplet calculation, including the molecular coordinates (coord), computational settings (control), basis-set definitions (basis, auxbasis), SCF results (energy, ridft.out), and vibrational-analysis results (aoforce.out, hessian, vib_normal_modes, vibspectrum).
 
 Additional files document the gradient and intensity calculations. The alpha.zip and beta.zip archives contain the corresponding orbital files.
 
-##Interpretation and limitations
+# Interpretation and limitations
 
 The original SCF output reports a negative HOMO–LUMO gap of approximately −0.0635 eV and explicitly warns that the orbital occupations should be checked. This result must not be interpreted as evidence that the triplet state is electronically stable.
 
