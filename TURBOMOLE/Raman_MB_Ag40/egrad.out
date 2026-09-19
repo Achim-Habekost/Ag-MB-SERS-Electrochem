@@ -1,0 +1,1307 @@
+
+   OpenMP run-time library returned nthreads =  4
+ operating system is Windows !
+
+ egrad (DESKTOP-K21TP4E) : TURBOMOLE V7-9 02 Oct 2024 at 08:18:09 compiled  Oct 2024
+ Copyright (C) 2024 TURBOMOLE GmbH, Karlsruhe
+
+
+    2026-09-09 21:42:24.748 
+
+
+
+
+                               e g r a d
+
+                             TURBOMOLE GmbH
+
+
+             integral direct evaluation of excited state
+                     and polarizability gradients
+                 and first-order nonadiabatic couplings
+
+
+
+          OpenMP Shared-Memory Parallelization:  4 CPUs.
+
+            By: Yannick J. Franzke and Christof Holzer
+
+
+
+          references (see also programs escf, dscf and ridft) 
+
+          review 
+          F. Furche and D. Rappoport,  
+          "Density functional methods for excited states: 
+          equilibrium structure and electronic spectra",
+          ch. III of "Computational Photochemistry", ed. by 
+          M. Olivucci, vol. 16 of "Theoretical and Computational 
+          Chemistry", Elsevier, Amsterdam, 2005.
+
+          nonorthonormal Krylov space methods 
+          F. Furche, B. T. Krull, B. D. Nguyen, J. Kwon, 
+          J. Chem. Phys. 144 (2016), 174105.
+
+          RI-J method 
+          D. Rappoport and F. Furche, 
+          J. Chem. Phys. 122 (2005), 064105.
+
+          Lagrangian method, implementation, benchmarks 
+          F. Furche and R. Ahlrichs,
+          J. Chem. Phys. 117 (2002), 7433;
+          J. Chem. Phys. 121 (2004), 12772 (E).
+
+          Polarizability derivatives, Raman intensities 
+          D. Rappoport and F. Furche, 
+          J. Chem. Phys. 126 (2007), 201104.
+
+          First-order nonadiabatic couplings 
+          R. Send and F. Furche, 
+          J. Chem. Phys. 132 (2010), 044107.
+                                     
+
+
+
+
+              +--------------------------------------------------+
+              | Atomic coordinate, charge and isotop information |
+              +--------------------------------------------------+
+
+                    atomic coordinates            atom    charge  isotop
+        -14.55965362   -8.21987967    2.39813975    ag    47.000     0
+         -9.32900039   -8.29814861    2.35112808    ag    47.000     0
+         -4.04026154   -8.40915087    2.28910694    ag    47.000     0
+          1.27896377   -8.35467967    2.29881337    ag    47.000     0
+          6.70656025   -8.29362142    2.10765241    ag    47.000     0
+        -11.98991077   -3.69612036    2.43273458    ag    47.000     0
+         -6.72722313   -3.76169971    2.90262504    ag    47.000     0
+         -1.40964188   -3.76598057    2.48094750    ag    47.000     0
+          4.02340710   -3.76233249    2.39920825    ag    47.000     0
+          9.37854790   -3.75868035    2.48171350    ag    47.000     0
+         -9.39914934    0.84811561    2.17243856    ag    47.000     0
+         -4.05282530    0.81944225    2.43115497    ag    47.000     0
+          1.29810162    0.82052520    2.42651440    ag    47.000     0
+          6.67586074    0.84765459    2.47237234    ag    47.000     0
+         11.96664427    0.76327363    2.35448544    ag    47.000     0
+         -6.67245044    5.42782677    2.21742180    ag    47.000     0
+         -1.31874565    5.47593485    2.44449421    ag    47.000     0
+          3.99124699    5.42724330    2.45874165    ag    47.000     0
+          9.27192319    5.42449093    2.30912542    ag    47.000     0
+         14.49835636    5.35500330    2.24139489    ag    47.000     0
+         -3.90058427   10.06774597    2.03691600    ag    47.000     0
+          1.33418211   10.05759642    2.51756174    ag    47.000     0
+          6.53840643   10.04149110    2.27957560    ag    47.000     0
+         11.81324546   10.05256252    2.02688582    ag    47.000     0
+        -12.28794419   -7.09444765   -2.22957070    ag    47.000     0
+         -6.82663566   -7.09444765   -2.22957070    ag    47.000     0
+         -1.36532713   -7.09444765   -2.22957070    ag    47.000     0
+          4.09598140   -7.09444765   -2.22957070    ag    47.000     0
+         -9.55728992   -2.36481651   -2.22957070    ag    47.000     0
+         -4.09598140   -2.36481651   -2.22957070    ag    47.000     0
+          1.36532713   -2.36481651   -2.22957070    ag    47.000     0
+          6.82663566   -2.36481651   -2.22957070    ag    47.000     0
+         -6.82663566    2.36481651   -2.22957070    ag    47.000     0
+         -1.36532713    2.36481651   -2.22957070    ag    47.000     0
+          4.09598140    2.36481651   -2.22957070    ag    47.000     0
+          9.55728992    2.36481651   -2.22957070    ag    47.000     0
+         -4.09598140    7.09444765   -2.22957070    ag    47.000     0
+          1.36532713    7.09444765   -2.22957070    ag    47.000     0
+          6.82663566    7.09444765   -2.22957070    ag    47.000     0
+         12.28794419    7.09444765   -2.22957070    ag    47.000     0
+        -11.26551528   -0.32858164    9.02220734    c      6.000     0
+         -9.02688805    1.25869985    8.83199944    n      7.000     0
+         -9.30366177    3.98616753    8.67165152    c      6.000     0
+         -6.67325294    0.19125389    8.67524864    c      6.000     0
+         -4.46251653    1.72046973    8.47853342    c      6.000     0
+         -2.05733954    0.63526699    8.44942957    c      6.000     0
+         -1.68212963   -2.07056993    8.61379128    c      6.000     0
+         -3.95014649   -3.56635030    8.64885163    c      6.000     0
+         -6.33891246   -2.50305492    8.69587840    c      6.000     0
+          0.54546715   -3.26856822    8.78043684    n      7.000     0
+          2.77131755   -2.02546601    8.74489927    c      6.000     0
+          5.04495473   -3.48378453    8.89671257    c      6.000     0
+          7.42157325   -2.40270377    8.83710729    c      6.000     0
+          7.72732278    0.29741835    8.68168484    c      6.000     0
+         10.06118687    1.40239824    8.79628673    n      7.000     0
+         12.31847269   -0.15078354    9.05110723    c      6.000     0
+         10.27255735    4.14585369    8.94537193    c      6.000     0
+          5.49230851    1.79283798    8.48657607    c      6.000     0
+          3.10647352    0.66983848    8.52633924    c      6.000     0
+          0.51217936    2.68293831    8.05864093    s     16.000     0
+        -11.53972964   -1.49243540    7.27000780    h      1.000     0
+        -11.14674002   -1.62182513   10.67584810    h      1.000     0
+        -12.94905136    0.88711455    9.26583101    h      1.000     0
+        -11.32477612    4.49499799    8.83693159    h      1.000     0
+         -8.24675739    4.96471990   10.20613633    h      1.000     0
+         -8.59386457    4.71052631    6.80504856    h      1.000     0
+         -4.61650728    3.78749137    8.38167020    h      1.000     0
+         -3.70396135   -5.63006754    8.71947445    h      1.000     0
+         -7.98776889   -3.75924704    8.75812021    h      1.000     0
+          4.81977465   -5.54618749    9.05589816    h      1.000     0
+          9.08462826   -3.63350754    8.97117224    h      1.000     0
+         12.34207146   -1.21060384   10.87297404    h      1.000     0
+         14.00807618    1.07844526    8.97650114    h      1.000     0
+         12.45864630   -1.53169346    7.46354322    h      1.000     0
+         12.29161111    4.68100831    9.03346900    h      1.000     0
+          9.29341500    4.89807495   10.65348818    h      1.000     0
+          9.45391653    5.06274262    7.23058501    h      1.000     0
+          5.62202143    3.85896796    8.32349544    h      1.000     0
+ 
+       center of nuclear mass  :    0.39303518    0.27238887    1.02488925
+       center of nuclear charge:    0.39474114    0.27386751    1.12761144
+
+   *************************************************************************
+   Raman_MB+_flach_obere Ag Schicht variabel                                
+   *************************************************************************
+
+
+
+              +--------------------------------------------------+
+              |               basis set information              |
+              +--------------------------------------------------+
+
+              we will work with the 1s 3p 5d 7f 9g ... basis set
+              ...i.e. with spherical basis functions...
+
+   type   atoms  prim   cont   basis
+   ---------------------------------------------------------------------------
+    s        1     36     18   def-SV(P)   [4s3p1d|10s7p1d]
+    ag      40     50     24   def-SV(P)   [5s3p2d|7s6p5d]
+    n        3     24     14   def-SV(P)   [3s2p1d|7s4p1d]
+    h       18      4      2   def-SV(P)   [2s|4s]
+    c       16     24     14   def-SV(P)   [3s2p1d|7s4p1d]
+   ---------------------------------------------------------------------------
+   total:   78   2564   1280
+   ---------------------------------------------------------------------------
+
+   total number of primitive shells          :   64
+   total number of contracted shells         :  558
+   total number of cartesian basis functions : 1380
+   total number of SCF-basis functions       : 1280
+
+  number of unique ecp types :    1
+
+ residuum convergence criterium   :  0.10E-04
+
+
+ integral neglect threshold       :  0.24E-11
+ integral storage threshold THIZE :  0.10E-04
+ integral storage threshold THIME :         5
+
+
+  UHF mode switched on !
+ DYNAMIC POLARIZABILITY CALCULATION
+
+            FOUND DFT-FLAG !
+
+ 
+             FOUND RI-J FLAG !
+ 
+  
+ AUXILIARY BASIS SET information:
+
+              we will work with the 1s 3p 5d 7f 9g ... basis set
+              ...i.e. with spherical basis functions...
+
+   type   atoms  prim   cont   basis
+   ---------------------------------------------------------------------------
+    s        1     71     40   def-SV(P)   [5s3p2d1f1g|12s6p5d1f1g]
+    ag      40     98     73   def-SV(P)   [7s4p3d3f2g|9s4p4d3f4g]
+    n        3     39     37   def-SV(P)   [6s3p3d1f|8s3p3d1f]
+    h       18     10      5   def-SV(P)   [2s1p|4s2p]
+    c       16     39     37   def-SV(P)   [6s3p3d1f|8s3p3d1f]
+   ---------------------------------------------------------------------------
+   total:   78   4912   3753
+   ---------------------------------------------------------------------------
+
+   total number of primitive shells          :   85
+   total number of contracted shells         : 1073
+   total number of cartesian basis functions : 4838
+   total number of SCF-basis functions       : 3753
+
+ 
+ Read                      1  frequencies (in nm) from control
+
+       Frequency (Hartree) 
+
+    1  0.58042487E-01
+
+ symmetry group of the molecule :   c1 
+
+ the group has the following generators :
+   c1(z)
+
+    1 symmetry operations found
+
+ there are 1 real representations :   a   
+
+ maximum number of shells which are related by symmetry :  1
+
+ 
+
+ determining totally symmetric integral contributions 
+    - equivalent to irreducible tensor elements - 
+ which can be formed within each triple of representations :
+
+             representation triple      contributions
+
+              a     a     a               1
+  MOs are in ASCII format !
+
+  MOs are in ASCII format !
+
+
+    mo occupation :
+   irrep   mo's   occupied
+    a     1280      455
+ 
+ number of basis functions   :  1280
+ number of occupied orbitals :   455
+ 
+ ALPHA-Occupation:455
+ BETA-Occupation :455
+
+ reading orbital data $uhfmo_alpha  from file alpha
+ orbital characterization : scfconv=6
+
+ reading orbital data $uhfmo_beta  from file beta
+ orbital characterization : scfconv=6
+  
+           ------------------
+           density functional
+           ------------------
+ PBE functional
+ exchange:    LDA + PBE
+ correlation: LDA (PW) + PBE
+ iterations will be done with small grid
+  
+ spherical integration : Lebedev's spherical grid
+ spherical gridsize    :                     3
+    i.e. gridpoints    :                   302
+  maximum batchsize    :                   100
+ value for diffuse not defined
+ radial integration    : Chebyshev 2nd kind (scaling 3)
+ radial gridsize       :                     3
+ integration cells     :                    78
+ partition function    : becke
+ partition sharpness   :                     3
+  
+  
+           ----------------------
+               RI - INFORMATION
+           ----------------------
+
+ biggest AO integral is expected to be     9.765798878
+
+ Threshold for integral neglect (rithr2):   0.24E-11
+ Threshold for integral neglect (rithr1):   0.24E-11
+
+ 
+    +---------------- Multipole Accelerated RI-J ---------------+
+    -------------------------------------------------------------
+      Number of bins for density partition        :  8
+      Maximum multipole moment used               : 14
+      Multipole precision parameter               :  1.0000E-08
+      Threshold for moment summation              :  1.0000E-24
+      Minimum separation between boxes            :  0.0000E+00
+      Maximum allowed extent                      :  2.0000E+01
+    +-----------------------------------------------------------+
+ 
+ Extensions and centers of shell-pairs:
+  number of shells with a single center:    94300
+  number of shells with double centers:      5228
+ Contributions to RI integral batches: 
+  neglected integral batches:                     56433
+  multipole/direct contribution:                  86465
+  multipole/memory contribution:                  13063
+ Core memory available (ricore)            1600 MiB
+ Core memory needed for (P|Q) and Cholesky 108 MiB
+ Core memory used for integrals            1493 MiB
+  
+ ****************************************
+ Memory allocated for RIDFT 1600 MiB
+ ****************************************
+                                            
+ preparing DFT   numerical integration ....
+          Overall gridpoints after grid construction =        171064
+
+ Calculating ground state density on molecular grid
+
+ Integral of ground state total density: Na =   909.9781153181107    
+
+ Integral of ground state spin density:  Nb =   0.000000000000000    
+
+
+ all orbitals will be included in the transformation
+
+ number of non-frozen orbitals          :  1280
+ number of non-frozen occupied orbitals :   455
+ all orbitals will be included in the transformation
+
+ number of non-frozen orbitals          :  1280
+ number of non-frozen occupied orbitals :   455
+
+                        -------------------
+                         excitation vector 
+                        -------------------
+
+
+ dimension of super-tensorspace: 1
+
+          IRREP   tensor space dimension   number of roots
+
+           a            750750                   3
+
+ maximum number of Davidson iterations set to   35
+
+
+ machine precision:  2.22D-16
+
+
+ logfile dipl_a    will be constructed
+
+
+
+
+                       Nonorthonormal Krylov Space Iteration
+
+
+ total number of roots to be determined: 3
+
+
+ maximum core memory set to         6400 MB,
+ corresponding to      219 vectors in CAO basis
+
+
+ maximum number of simultaneously treated vectors (including degeneracy):        3
+
+
+ Iteration IRREP Converged      Max. Euclidean
+                 roots          residual norm
+
+    1       a        0        8.226598403701161D+00
+ 
+    2       a        0        6.592764718496388D+00
+ 
+    3       a        0        6.213796285623491D+00
+ 
+    4       a        0        4.784492682948101D+00
+ 
+    5       a        0        5.119333857366499D+00
+ 
+    6       a        0        4.999603030706348D+00
+ 
+    7       a        0        3.478303392278144D+00
+ 
+    8       a        0        3.076107419821697D+00
+ 
+    9       a        0        5.593215946312156D+00
+ 
+   10       a        0        4.605696896318597D+00
+ 
+   11       a        0        4.072980182011005D-01
+ 
+   12       a        0        2.347708667744741D-01
+ 
+   13       a        0        1.144883366433211D+00
+ 
+   14       a        0        1.778255811900724D-01
+ 
+   15       a        0        5.843827273302576D-02
+ 
+   16       a        0        1.784634368912550D-02
+ 
+   17       a        0        5.909018032159014D-03
+ 
+   18       a        0        3.706695199770700D-03
+ 
+   19       a        0        1.061209050923059D-03
+ 
+   20       a        0        4.726750432318052D-04
+ 
+   21       a        0        2.551030162498243D-04
+ 
+   22       a        0        2.294375817465796D-04
+ 
+   23       a        0        9.866638558198640D-05
+ 
+   24       a        2        1.029458708099935D-05
+ 
+   25       a        3        9.388657954817854D-06
+ 
+
+ converged!
+
+
+ Switching to fine grid
+
+ preparing DFT   numerical integration ....
+          Overall gridpoints after grid construction =        545939
+
+ Calculating ground state density on molecular grid
+
+ Integral of ground state total density: Na =   909.9996241001419    
+
+ Integral of ground state spin density:  Nb =   0.000000000000000    
+
+
+
+ Iteration IRREP Converged      Max. Euclidean
+                 roots          residual norm
+
+   26       a        0        1.252509004034640D-02
+ 
+
+ NOTE: Residual norms are larger than 1.00D-05 due to mgrid option!
+
+ Eigenpairs written on logfile dipl_a   
+
+
+
+ IRREP   Vector     Frequency            Euclidean residual norm
+
+  a         1    3.368930351120985D-03    1.252509004034640D-02
+            2    3.368930351120985D-03    8.621988677540575D-03
+            3    3.368930351120985D-03    8.239788905717364D-03
+
+
+
+ Irreducible components of electric dipole vector:
+
+ IRREP column      x          y          z
+
+  a       1      1.000      0.000      0.000
+  a       1      0.000      1.000      0.000
+  a       1      0.000      0.000      1.000
+
+ Irreducible components of magnetic dipole vector:
+
+ IRREP column      x          y          z
+
+  a       1      1.000      0.000      0.000
+  a       1      0.000      1.000      0.000
+  a       1      0.000      0.000      1.000
+
+
+
+
+                           1st frequency
+
+
+ Frequency:                              0.5804248746496815E-01
+
+ Frequency / eV:                          1.579417121101507    
+
+ Frequency / nm:                          785.0000000000000    
+
+ Frequency / cm^(-1):                     12738.85350128327    
+
+
+ Electronic dipole polarizability (length representation):
+
+   xx     3668.707622161277    
+   yy     2519.549799606752       1/3*trace:         2458.331175361784    
+   zz     1186.736104317324    
+   xy     977.8609844797422    
+   xz     96.89983633164925       Anisotropy:        2746.176216192435    
+   yz     73.27898560902241    
+
+
+ Electronic rotatory dispersion (length representation):
+
+ ## NOTE: since TM version 6.2 signs have been corrected ##
+
+   xx     7312.615961822994    
+   yy    -740.0624916233684       1/3*trace:         1438.206397538831    
+   zz    -2257.934277583132    
+   xy     2306.986237363742    
+   yx    -539.1561890894091    
+   xz     4013.866983917441       Anisotropy:        14570.30072796582    
+   zx     141.6462843056505    
+   yz     8086.255667810595    
+   zy    -1217.584675048571    
+
+   specific rotation [alpha] in deg*[dm(g/cc)]^(-1)   6815.144520309158    
+
+          IRREP   tensor space dimension   number of roots
+
+           a            750750                   3
+
+          IRREP   tensor space dimension   number of roots
+
+           a            750750                   3
+
+                       ----------------------
+                        CPKS right-hand side 
+                       ----------------------
+
+
+          IRREP   tensor space dimension   number of roots
+
+           a            750750                   6
+
+                          ----------------
+                           CPKS equations 
+                          ----------------
+
+
+ logfile rman_a    will be constructed
+
+
+
+ Switching to coarse grid
+
+ preparing DFT   numerical integration ....
+          Overall gridpoints after grid construction =        171064
+
+
+                       Nonorthonormal Krylov Space Iteration
+
+
+ total number of roots to be determined: 6
+
+
+ maximum core memory set to         6400 MB,
+ corresponding to      219 vectors in CAO basis
+
+
+ maximum number of simultaneously treated vectors (including degeneracy):        6
+
+
+ Iteration IRREP Converged      Max. Euclidean
+                 roots          residual norm
+
+    1       a        0        4.845821736937035D-01
+ 
+    2       a        0        2.250672361642363D-01
+ 
+    3       a        0        1.215359016319267D-01
+ 
+    4       a        0        5.559032494957242D-02
+ 
+    5       a        0        1.896961301236102D-02
+ 
+    6       a        0        7.218828561452366D-03
+ 
+    7       a        0        2.391787310509488D-03
+ 
+    8       a        0        7.738929648231062D-04
+ 
+    9       a        0        2.626211877238236D-04
+ 
+   10       a        0        8.744798780787832D-05
+ 
+   11       a        0        3.097086638552504D-05
+ 
+   12       a        5        1.088282431344373D-05
+ 
+   13       a        6        9.067129284642357D-06
+ 
+
+ converged!
+
+
+ Switching to fine grid
+
+ preparing DFT   numerical integration ....
+          Overall gridpoints after grid construction =        545939
+
+ Iteration IRREP Converged      Max. Euclidean
+                 roots          residual norm
+
+   14       a        0        3.845216644661489D-04
+ 
+
+ NOTE: Residual norms are larger than 1.00D-05 due to mgrid option!
+
+ Eigenpairs written on logfile rman_a   
+
+
+
+ IRREP   Vector     Frequency            Euclidean residual norm
+
+  a         1    0.000000000000000D+00    2.858006599617959D-04
+            2    0.000000000000000D+00    3.213174630861981D-04
+            3    0.000000000000000D+00    3.845216644661489D-04
+            4    0.000000000000000D+00    3.156818265704950D-04
+            5    0.000000000000000D+00    2.987449738845662D-04
+            6    0.000000000000000D+00    2.699270088863120D-04
+
+
+
+                          -------------------
+                           relaxed densities 
+                          -------------------
+
+
+    ----------------------------------------
+     S+T+V CONTRIBUTIONS TO POL. GRADIENT 
+    ----------------------------------------
+
+ 1e-integral 1st. derivatives will be neglected if expon. factor < 0.100000E-10
+
+
+    ----------------------------------------
+     DIPOLE CONTRIBUTION TO POL. GRADIENT   
+    ----------------------------------------
+  dipole integral derivatives will be neglected if
+  expon. factor < 0.100000E-09
+
+    -----------------------------------------------
+     TWO ELECTRON CONTRIBUTIONS TO POL. GRADIENT 
+    -----------------------------------------------
+
+ setting up bound for integral derivative estimation
+
+ increment for numerical differentiation : 0.00050000
+
+ biggest AO integral is expected to be     9.765798878
+ biggest cartesian 1st derivative AO integral is expected to be    25.279206634
+ Integrated ground state density     :   909.9996241001686    
+
+ Integrated ground state spin density:   0.000000000000000    
+
+
+          ------------------------------------------------------
+            cartesian derivatives of electronic polarizability  
+          ------------------------------------------------------
+
+                              --------------------
+                                 xx   component
+                              --------------------
+
+  ATOM            1 ag           2 ag           3 ag           4 ag
+ d(alpha)/dx  -0.4714730D+03 -0.2733208D+03  0.1254146D+03  0.1365433D+03
+ d(alpha)/dy  -0.5576713D+03 -0.6110714D+03 -0.2153348D+03 -0.3121275D+03
+ d(alpha)/dz   0.4720805D+03 -0.4345252D+03 -0.1687379D+03 -0.1388622D+03
+
+  ATOM            5 ag           6 ag           7 ag           8 ag
+ d(alpha)/dx   0.4561276D+03 -0.7190149D+03  0.1447977D+03 -0.5538217D+02
+ d(alpha)/dy  -0.7762776D+02  0.2251975D+03  0.1920400D+03 -0.1395828D+03
+ d(alpha)/dz   0.4732197D+03 -0.5739736D+03 -0.3864975D+03 -0.8786916D+02
+
+  ATOM            9 ag          10 ag          11 ag          12 ag
+ d(alpha)/dx   0.2419141D+03 -0.5870098D+03 -0.6166736D+02 -0.1019196D+03
+ d(alpha)/dy  -0.1414888D+03 -0.6026799D+03  0.1354393D+03  0.1699730D+02
+ d(alpha)/dz  -0.3366765D+03 -0.4643940D+03  0.1930996D+03 -0.3360919D+03
+
+  ATOM           13 ag          14 ag          15 ag          16 ag
+ d(alpha)/dx  -0.2285174D+03  0.6536660D+02  0.6342949D+03 -0.4779243D+03
+ d(alpha)/dy   0.2923638D+03  0.5539387D+02  0.4856034D+03  0.5082039D+03
+ d(alpha)/dz  -0.1878768D+03 -0.1045173D+03 -0.7877773D+03 -0.2756274D+03
+
+  ATOM           17 ag          18 ag          19 ag          20 ag
+ d(alpha)/dx   0.1828958D+03 -0.4907737D+02 -0.1637200D+02  0.5222265D+03
+ d(alpha)/dy  -0.1098831D+03  0.4056505D+02 -0.2423514D+03  0.6365801D+03
+ d(alpha)/dz  -0.3603446D+03 -0.2670742D+03  0.1078233D+03  0.9585227D+03
+
+  ATOM           21 ag          22 ag          23 ag          24 ag
+ d(alpha)/dx   0.5900166D+02 -0.8019228D+03  0.7145026D+03  0.3660095D+03
+ d(alpha)/dy   0.2275299D+03  0.8420294D+02  0.4243261D+03  0.8015401D+01
+ d(alpha)/dz   0.4699964D+03 -0.1972087D+03 -0.1732502D+03  0.5668169D+03
+
+  ATOM           25 ag          26 ag          27 ag          28 ag
+ d(alpha)/dx   0.1646132D+06 -0.1062705D+06 -0.7249322D+05 -0.2686026D+06
+ d(alpha)/dy  -0.2200191D+05  0.5539897D+06  0.5997206D+06  0.2582488D+06
+ d(alpha)/dz  -0.2951688D+06 -0.2387574D+06  0.7928597D+06 -0.4129634D+06
+
+  ATOM           29 ag          30 ag          31 ag          32 ag
+ d(alpha)/dx   0.8598636D+05  0.1513990D+07 -0.3714162D+05  0.2497218D+06
+ d(alpha)/dy  -0.4135510D+06 -0.4559465D+06 -0.2003814D+06  0.3422190D+06
+ d(alpha)/dz  -0.2316764D+06  0.4364786D+06 -0.5321830D+06  0.6694799D+06
+
+  ATOM           33 ag          34 ag          35 ag          36 ag
+ d(alpha)/dx   0.1319994D+06 -0.3938634D+06 -0.4080053D+06 -0.3349618D+06
+ d(alpha)/dy   0.1320420D+06  0.3480619D+06 -0.3896657D+06 -0.1615395D+06
+ d(alpha)/dz   0.1119225D+07 -0.6895799D+06  0.1674995D+06 -0.5066811D+06
+
+  ATOM           37 ag          38 ag          39 ag          40 ag
+ d(alpha)/dx   0.4747389D+05  0.1271227D+06  0.2814629D+06  0.4948775D+05
+ d(alpha)/dy   0.8079740D+05 -0.1416684D+06  0.7355401D+06  0.2778376D+06
+ d(alpha)/dz  -0.5713605D+06  0.7304730D+06 -0.2675126D+06 -0.6998632D+05
+
+  ATOM           41 c           42 n           43 c           44 c 
+ d(alpha)/dx  -0.7305880D+02 -0.5241627D+02 -0.2007736D+01  0.2520431D+03
+ d(alpha)/dy  -0.1214924D+02 -0.2505787D+03  0.6435271D+03 -0.4769115D+03
+ d(alpha)/dz   0.1625125D+02 -0.5250603D+03 -0.2424941D+03  0.5185811D+03
+
+  ATOM           45 c           46 c           47 c           48 c 
+ d(alpha)/dx  -0.3207121D+03  0.1350301D+03  0.1066840D+03 -0.1037846D+03
+ d(alpha)/dy   0.9040198D+02 -0.2714621D+03  0.1323733D+03 -0.4023241D+03
+ d(alpha)/dz   0.2596379D+03 -0.1338486D+03 -0.5136143D+03 -0.6265389D+03
+
+  ATOM           49 c           50 n           51 c           52 c 
+ d(alpha)/dx  -0.5065396D+03 -0.1348017D+03  0.5522287D+03 -0.6267261D+03
+ d(alpha)/dy   0.4214083D+03 -0.5176655D+03  0.4615614D+03 -0.1879412D+03
+ d(alpha)/dz   0.1078514D+03 -0.1674213D+03  0.3376798D+03  0.6030619D+02
+
+  ATOM           53 c           54 c           55 n           56 c 
+ d(alpha)/dx   0.3598891D+03 -0.3819097D+03  0.1398101D+03  0.1980993D+03
+ d(alpha)/dy   0.4237419D+03 -0.6122315D+02  0.1310656D+03 -0.9541416D+02
+ d(alpha)/dz  -0.9310869D+02  0.2340092D+03 -0.1978008D+03 -0.7264755D+02
+
+  ATOM           57 c           58 c           59 c           60 s 
+ d(alpha)/dx   0.1770440D+03  0.2309116D+03 -0.1002285D+03  0.1491333D+03
+ d(alpha)/dy   0.2767857D+02  0.1864218D+01 -0.4839108D+03  0.7570557D+03
+ d(alpha)/dz   0.2542966D+02 -0.1211424D+03 -0.1648150D+03 -0.3134660D+03
+
+  ATOM           61 h           62 h           63 h           64 h 
+ d(alpha)/dx  -0.1517121D+02  0.2906954D+02  0.1487636D+01  0.1042725D+02
+ d(alpha)/dy  -0.2037742D+02 -0.3734974D+02 -0.6397803D+01  0.9319102D+01
+ d(alpha)/dz   0.6772535D+02 -0.9182423D+00 -0.1290313D+02  0.8193668D+01
+
+  ATOM           65 h           66 h           67 h           68 h 
+ d(alpha)/dx  -0.5661862D+02 -0.1270190D+03  0.4070649D+01  0.3397766D+02
+ d(alpha)/dy  -0.3335151D+02 -0.5994065D+02  0.4363183D+02 -0.5167465D+01
+ d(alpha)/dz   0.9121086D+02  0.3031081D+03 -0.9957865D+02  0.6795137D+02
+
+  ATOM           69 h           70 h           71 h           72 h 
+ d(alpha)/dx  -0.1022202D+02  0.2282339D+02  0.2270575D+02 -0.3501023D+02
+ d(alpha)/dy  -0.1443064D+02 -0.1036729D+02 -0.7566989D+02  0.9451314D+01
+ d(alpha)/dz   0.6220174D+02 -0.4059447D+02 -0.3872869D+02  0.4033913D+02
+
+  ATOM           73 h           74 h           75 h           76 h 
+ d(alpha)/dx  -0.9242907D+01  0.5517040D+02 -0.2238391D+02 -0.6939897D+02
+ d(alpha)/dy  -0.2569615D+02  0.6874635D+02  0.2523719D+02 -0.4824814D+02
+ d(alpha)/dz  -0.5276897D+02  0.1378053D+03 -0.6981035D+02  0.7330362D+01
+
+  ATOM           77 h           78 h 
+ d(alpha)/dx   0.4580578D+01 -0.5517657D+01
+ d(alpha)/dy  -0.8308667D+00  0.2709141D+02
+ d(alpha)/dz  -0.2606180D+02  0.4352422D+02
+ 
+                              --------------------
+                                 yy   component
+                              --------------------
+
+  ATOM            1 ag           2 ag           3 ag           4 ag
+ d(alpha)/dx  -0.1251791D+03  0.1514850D+03 -0.3330442D+03  0.9734044D+02
+ d(alpha)/dy  -0.3774333D+02 -0.4252561D+03 -0.1779703D+03 -0.4624692D+02
+ d(alpha)/dz   0.1865534D+02  0.8309791D+02 -0.1016406D+03 -0.1471708D+03
+
+  ATOM            5 ag           6 ag           7 ag           8 ag
+ d(alpha)/dx   0.2338601D+03 -0.2535117D+03  0.1407937D+03  0.1812011D+03
+ d(alpha)/dy  -0.3027296D+02  0.2882577D+03 -0.5125323D+02  0.1804861D+03
+ d(alpha)/dz   0.2075998D+03 -0.1382128D+03  0.2386601D+02  0.8021453D+02
+
+  ATOM            9 ag          10 ag          11 ag          12 ag
+ d(alpha)/dx  -0.8910795D+02 -0.1638551D+03 -0.3034457D+03  0.1358677D+03
+ d(alpha)/dy   0.1765916D+03 -0.5800528D+02 -0.6988012D+01  0.4176462D+02
+ d(alpha)/dz   0.2479426D+02  0.1780079D+03  0.1610519D+02  0.1097185D+03
+
+  ATOM           13 ag          14 ag          15 ag          16 ag
+ d(alpha)/dx  -0.2028367D+03  0.2783847D+03  0.6112931D+02 -0.1392878D+03
+ d(alpha)/dy  -0.1742381D+03 -0.3568235D+03  0.2000836D+03  0.1948710D+03
+ d(alpha)/dz  -0.1395073D+02  0.6748622D+02 -0.4664045D+02  0.6602629D+02
+
+  ATOM           17 ag          18 ag          19 ag          20 ag
+ d(alpha)/dx   0.1522110D+02 -0.8187814D+02  0.1270142D+03  0.1316796D+03
+ d(alpha)/dy  -0.2393295D+03  0.3658917D+03  0.6726767D+02 -0.2110407D+03
+ d(alpha)/dz  -0.8103134D+02  0.2875578D+02  0.1548818D+03 -0.2854990D+02
+
+  ATOM           21 ag          22 ag          23 ag          24 ag
+ d(alpha)/dx  -0.1572641D+03  0.6207492D+02  0.2844949D+03 -0.1198990D+03
+ d(alpha)/dy   0.9106383D+02 -0.1186751D+03 -0.6841656D+02  0.3806369D+03
+ d(alpha)/dz   0.1398809D+03  0.1399628D+03 -0.1744605D+02  0.1142308D+03
+
+  ATOM           25 ag          26 ag          27 ag          28 ag
+ d(alpha)/dx  -0.5983888D+05  0.8072014D+05 -0.9390439D+05  0.5363789D+05
+ d(alpha)/dy  -0.9114920D+05  0.2704866D+05 -0.3079524D+06 -0.3454933D+04
+ d(alpha)/dz  -0.1250638D+05  0.2172904D+06  0.2588641D+06 -0.1900725D+05
+
+  ATOM           29 ag          30 ag          31 ag          32 ag
+ d(alpha)/dx   0.6057974D+04 -0.3923596D+05  0.2442661D+05 -0.1306796D+04
+ d(alpha)/dy   0.1748653D+06  0.1623643D+06  0.1117450D+07  0.2143412D+06
+ d(alpha)/dz   0.3340576D+06  0.1409444D+06  0.2962304D+04 -0.2283209D+05
+
+  ATOM           33 ag          34 ag          35 ag          36 ag
+ d(alpha)/dx   0.5312250D+05  0.4686887D+06 -0.6760885D+06  0.1939964D+05
+ d(alpha)/dy  -0.2311584D+06 -0.7972724D+06 -0.4172429D+06 -0.2981818D+06
+ d(alpha)/dz   0.2049401D+06 -0.2412697D+06  0.8728956D+05  0.2726036D+05
+
+  ATOM           37 ag          38 ag          39 ag          40 ag
+ d(alpha)/dx   0.7615045D+05  0.6075501D+05 -0.5049529D+05  0.3547328D+05
+ d(alpha)/dy   0.1595134D+06  0.1129674D+06  0.1561362D+06  0.7798662D+05
+ d(alpha)/dz   0.4507445D+05 -0.5112624D+05 -0.2243075D+06 -0.1274303D+06
+
+  ATOM           41 c           42 n           43 c           44 c 
+ d(alpha)/dx  -0.8645327D+02 -0.3169378D+03 -0.1308871D+03  0.2762598D+03
+ d(alpha)/dy  -0.3320096D+02  0.3307258D+03 -0.1843293D+03 -0.3765630D+03
+ d(alpha)/dz  -0.3792229D+02  0.4432716D+02  0.1213868D+03 -0.3544227D+02
+
+  ATOM           45 c           46 c           47 c           48 c 
+ d(alpha)/dx  -0.6955502D+01 -0.1030266D+03 -0.5461379D+03  0.3377362D+03
+ d(alpha)/dy   0.4311060D+02 -0.4259160D+03  0.4195076D+03  0.7563198D+01
+ d(alpha)/dz  -0.6496685D+02  0.1461136D+02  0.1829295D+03  0.3594530D+02
+
+  ATOM           49 c           50 n           51 c           52 c 
+ d(alpha)/dx  -0.2952875D+03  0.1348369D+02  0.5512859D+03 -0.4034714D+03
+ d(alpha)/dy   0.2444503D+03 -0.5999820D+03  0.1453195D+03 -0.1705753D+02
+ d(alpha)/dz  -0.7222678D+02 -0.3342317D+03  0.6914632D+02 -0.1249460D+02
+
+  ATOM           53 c           54 c           55 n           56 c 
+ d(alpha)/dx   0.3495842D+03 -0.5350587D+03  0.4330831D+03  0.8123330D+01
+ d(alpha)/dy   0.4395167D+03 -0.5438844D+03  0.2293455D+03  0.1613890D+03
+ d(alpha)/dz   0.4066297D+02  0.5194750D+02  0.1548699D+03 -0.3388613D+02
+
+  ATOM           57 c           58 c           59 c           60 s 
+ d(alpha)/dx   0.1514340D+03  0.7977547D+02  0.1822867D+03 -0.1866624D+02
+ d(alpha)/dy  -0.9232093D+02 -0.6352679D+02 -0.2116845D+03  0.4993156D+03
+ d(alpha)/dz   0.2949800D+02  0.1177624D+03 -0.3403747D+02  0.1397723D+02
+
+  ATOM           61 h           62 h           63 h           64 h 
+ d(alpha)/dx   0.2748654D+02  0.3739122D+02  0.2091511D+01  0.5853969D+01
+ d(alpha)/dy   0.5492382D+02 -0.1490824D+01 -0.3658984D+01 -0.1050247D+01
+ d(alpha)/dz   0.7747532D+02  0.3087293D+02 -0.1833560D+02 -0.1089427D+02
+
+  ATOM           65 h           66 h           67 h           68 h 
+ d(alpha)/dx   0.3688122D+02  0.2840468D+02  0.1152665D+02 -0.5909663D+01
+ d(alpha)/dy  -0.7408319D+00  0.1381799D+02  0.2382125D+02 -0.6258716D+01
+ d(alpha)/dz  -0.2536851D+02 -0.1557286D+03  0.6961334D+01 -0.7639143D+01
+
+  ATOM           69 h           70 h           71 h           72 h 
+ d(alpha)/dx  -0.1509236D+02  0.4400848D+01  0.3414951D+00 -0.3719077D+02
+ d(alpha)/dy  -0.1821836D+02  0.6207581D+01 -0.1785379D+02  0.1105116D+02
+ d(alpha)/dz   0.2276009D+02 -0.1654316D+02 -0.3274242D+01  0.1958003D+01
+
+  ATOM           73 h           74 h           75 h           76 h 
+ d(alpha)/dx  -0.4265287D+01 -0.3116546D+02 -0.1145713D+02 -0.5089795D+01
+ d(alpha)/dy   0.3079548D+01  0.9954356D+01  0.2659797D+01 -0.1220841D+02
+ d(alpha)/dz  -0.7015568D+01 -0.2765678D+02 -0.6861246D+01 -0.1354999D+02
+
+  ATOM           77 h           78 h 
+ d(alpha)/dx  -0.3739673D+01 -0.1901926D+02
+ d(alpha)/dy   0.5012992D+01  0.3929788D+02
+ d(alpha)/dz  -0.3626245D+02 -0.3549217D+02
+ 
+                              --------------------
+                                 zz   component
+                              --------------------
+
+  ATOM            1 ag           2 ag           3 ag           4 ag
+ d(alpha)/dx   0.1170499D+02 -0.6746620D+02  0.1062745D+01 -0.3054651D+02
+ d(alpha)/dy  -0.2182292D+02 -0.1745445D+03 -0.9577191D+02  0.5331248D+01
+ d(alpha)/dz   0.3556322D+02 -0.2424866D+02 -0.2756850D+02  0.1948954D+02
+
+  ATOM            5 ag           6 ag           7 ag           8 ag
+ d(alpha)/dx   0.4485559D+02 -0.1210977D+03  0.5396678D+02  0.6168426D+02
+ d(alpha)/dy   0.3451240D+01  0.4204734D+02  0.6597776D+02  0.1124214D+02
+ d(alpha)/dz   0.8512148D+02 -0.9960051D+01  0.9987367D-01 -0.1728309D+02
+
+  ATOM            9 ag          10 ag          11 ag          12 ag
+ d(alpha)/dx  -0.5650868D+02 -0.8710405D+02 -0.8223029D+02  0.5323327D+02
+ d(alpha)/dy   0.3598399D+02 -0.4167545D+01  0.1029480D+02  0.2786776D+02
+ d(alpha)/dz   0.1109123D+02 -0.4651039D+02 -0.8704027D+02  0.5230792D+02
+
+  ATOM           13 ag          14 ag          15 ag          16 ag
+ d(alpha)/dx  -0.6057436D+01 -0.2211900D+01  0.3646122D+02 -0.1120029D+01
+ d(alpha)/dy   0.5713869D+02 -0.1280578D+03  0.9867853D+02 -0.3703604D+01
+ d(alpha)/dz   0.1943347D+02 -0.3125511D+02 -0.1354955D+03 -0.1168963D+02
+
+  ATOM           17 ag          18 ag          19 ag          20 ag
+ d(alpha)/dx   0.1590340D+02 -0.1299927D+03  0.6848049D+02  0.1308999D+03
+ d(alpha)/dy  -0.8371743D+02  0.4346218D+02  0.3257186D+02 -0.2713592D+02
+ d(alpha)/dz  -0.4144888D+02 -0.5235309D+02  0.5511584D+02  0.7885437D+02
+
+  ATOM           21 ag          22 ag          23 ag          24 ag
+ d(alpha)/dx  -0.6484927D+01  0.2185224D+02  0.7048362D+02 -0.2553133D+02
+ d(alpha)/dy   0.4587171D+01  0.5036866D+01  0.7032319D+02  0.7391488D+02
+ d(alpha)/dz   0.2682531D+02  0.1713624D+02  0.2442960D+02  0.5207661D+02
+
+  ATOM           25 ag          26 ag          27 ag          28 ag
+ d(alpha)/dx  -0.2474993D+05  0.6480609D+05 -0.1070919D+05  0.1268617D+04
+ d(alpha)/dy  -0.7799375D+04 -0.1098746D+05  0.1351586D+06 -0.2471428D+05
+ d(alpha)/dz  -0.6083859D+05 -0.3539713D+05  0.8285802D+05  0.6224086D+04
+
+  ATOM           29 ag          30 ag          31 ag          32 ag
+ d(alpha)/dx  -0.1682684D+05  0.3250579D+05 -0.1597285D+06  0.4760932D+05
+ d(alpha)/dy   0.4199591D+05 -0.9416687D+05  0.1784253D+05  0.6772568D+05
+ d(alpha)/dz  -0.3285503D+05 -0.1070793D+06 -0.9931718D+05  0.7657001D+05
+
+  ATOM           33 ag          34 ag          35 ag          36 ag
+ d(alpha)/dx   0.3474598D+05  0.1745399D+06  0.2300652D+05 -0.9260907D+05
+ d(alpha)/dy  -0.2692106D+04 -0.4838853D+05  0.3334398D+05 -0.2768672D+05
+ d(alpha)/dz   0.9054046D+05 -0.3792989D+05  0.1434017D+06 -0.1526778D+05
+
+  ATOM           37 ag          38 ag          39 ag          40 ag
+ d(alpha)/dx  -0.4293724D+05  0.1039039D+06 -0.1117435D+06  0.1852576D+05
+ d(alpha)/dy   0.3232541D+05 -0.4960335D+05  0.8465198D+05  0.3916925D+05
+ d(alpha)/dz  -0.4105370D+04  0.6536528D+05 -0.9028423D+05 -0.1127808D+06
+
+  ATOM           41 c           42 n           43 c           44 c 
+ d(alpha)/dx  -0.8174094D+00 -0.7824769D+02 -0.1829673D+02  0.6800310D+02
+ d(alpha)/dy   0.2261289D+02  0.4619544D+02 -0.2167382D+02 -0.7049125D+02
+ d(alpha)/dz   0.6567831D+00 -0.2745412D+01 -0.1449880D+02 -0.8172430D+01
+
+  ATOM           45 c           46 c           47 c           48 c 
+ d(alpha)/dx  -0.8692935D+02  0.8572506D+02 -0.2388822D+03  0.1870114D+03
+ d(alpha)/dy   0.5392626D+02 -0.1623105D+03  0.1262268D+03  0.4039712D+01
+ d(alpha)/dz  -0.6560196D+02  0.1437450D+03  0.5459542D+02  0.3166505D+02
+
+  ATOM           49 c           50 n           51 c           52 c 
+ d(alpha)/dx  -0.1155884D+03  0.9704231D+02  0.6898136D+02 -0.8659369D+02
+ d(alpha)/dy   0.7083556D+02 -0.1371355D+03  0.4921440D+02 -0.1795606D+02
+ d(alpha)/dz  -0.2831514D+02 -0.1312617D+03  0.1416245D+02  0.2211780D+01
+
+  ATOM           53 c           54 c           55 n           56 c 
+ d(alpha)/dx   0.9360621D+02 -0.1575716D+03  0.1313588D+03 -0.2490024D+01
+ d(alpha)/dy   0.1116262D+03 -0.1468326D+03  0.8913175D+02  0.7696339D+02
+ d(alpha)/dz  -0.2379126D+02  0.1673955D+02  0.5621262D+02 -0.1537346D+02
+
+  ATOM           57 c           58 c           59 c           60 s 
+ d(alpha)/dx   0.7050162D+02  0.1720270D+02  0.4206617D+02 -0.3466099D+02
+ d(alpha)/dy  -0.6620277D+02 -0.6424825D+01 -0.8911073D+02  0.4758713D+02
+ d(alpha)/dz   0.3122690D+02  0.8083682D+02  0.2054608D+02 -0.1227402D+03
+
+  ATOM           61 h           62 h           63 h           64 h 
+ d(alpha)/dx   0.4299079D+01  0.5234048D+01 -0.4169127D+01 -0.4579658D+00
+ d(alpha)/dy  -0.6352259D+01 -0.1237263D+02  0.3853542D+00  0.1983967D+01
+ d(alpha)/dz  -0.5221126D+01  0.1680521D+02 -0.3761755D+00 -0.1475728D+01
+
+  ATOM           65 h           66 h           67 h           68 h 
+ d(alpha)/dx   0.1036471D+02  0.2502890D+01  0.2330141D+01  0.2441665D+01
+ d(alpha)/dy   0.8808554D+01  0.2665605D+01  0.4560211D+01  0.1424280D+01
+ d(alpha)/dz   0.7076245D+01 -0.3996343D-01  0.1038254D+02  0.4712287D+01
+
+  ATOM           69 h           70 h           71 h           72 h 
+ d(alpha)/dx  -0.7450488D+01 -0.6964425D+00  0.2900546D+01 -0.1290039D+02
+ d(alpha)/dy  -0.8798873D+00  0.1373646D+00 -0.6489980D+01 -0.9792173D+01
+ d(alpha)/dz   0.1048857D+02 -0.3105834D+01  0.7567868D+01  0.1742254D+02
+
+  ATOM           73 h           74 h           75 h           76 h 
+ d(alpha)/dx  -0.1168584D+00 -0.4243257D+01 -0.2670863D+01 -0.1140262D+02
+ d(alpha)/dy  -0.4918279D+00 -0.5817193D+01  0.2490554D+01 -0.1353781D+01
+ d(alpha)/dz  -0.7723166D+01 -0.1323330D+02 -0.8937166D+01  0.2157936D+01
+
+  ATOM           77 h           78 h 
+ d(alpha)/dx  -0.8523116D+01 -0.3944542D+01
+ d(alpha)/dy   0.1492705D+02  0.1432964D+02
+ d(alpha)/dz  -0.4609081D+02 -0.1584424D+02
+ 
+                              --------------------
+                                 xy   component
+                              --------------------
+
+  ATOM            1 ag           2 ag           3 ag           4 ag
+ d(alpha)/dx  -0.3569472D+02 -0.1390066D+03  0.8102787D+02 -0.9966995D+02
+ d(alpha)/dy  -0.7269522D+02 -0.1958925D+03 -0.1715787D+03 -0.9073169D+01
+ d(alpha)/dz   0.1166402D+03 -0.1094696D+03 -0.5279247D+02  0.1665625D+03
+
+  ATOM            5 ag           6 ag           7 ag           8 ag
+ d(alpha)/dx  -0.1874857D+02 -0.1769474D+03  0.9748307D+02  0.3552626D+02
+ d(alpha)/dy   0.2342712D+02  0.8732413D+01  0.8086012D+02 -0.1617176D+02
+ d(alpha)/dz   0.6784642D+02 -0.7693156D+02 -0.1189547D+03  0.4508731D+02
+
+  ATOM            9 ag          10 ag          11 ag          12 ag
+ d(alpha)/dx  -0.1290738D+03  0.6654969D+02 -0.4176172D+02  0.3819865D+02
+ d(alpha)/dy  -0.2145078D+01 -0.7272354D+02  0.3476161D+02  0.8743363D+02
+ d(alpha)/dz  -0.1178749D+03 -0.7853760D+02 -0.4171343D+02 -0.7933199D+01
+
+  ATOM           13 ag          14 ag          15 ag          16 ag
+ d(alpha)/dx   0.9281145D+02 -0.2561455D+03  0.2873650D+03 -0.6804707D+02
+ d(alpha)/dy   0.8761791D+02  0.4361384D+01  0.1347421D+02  0.3128970D+02
+ d(alpha)/dz  -0.1040871D+03 -0.1734716D+03 -0.3589786D+03  0.8380787D+02
+
+  ATOM           17 ag          18 ag          19 ag          20 ag
+ d(alpha)/dx  -0.2169869D+02 -0.1826824D+03  0.2234534D+03  0.6775353D+02
+ d(alpha)/dy  -0.1462469D+03 -0.1672395D+03  0.4144666D+02  0.1083567D+03
+ d(alpha)/dz  -0.1111193D+03 -0.2069764D+03 -0.5196582D+02  0.3725438D+03
+
+  ATOM           21 ag          22 ag          23 ag          24 ag
+ d(alpha)/dx  -0.3133280D+02 -0.7694220D+01  0.7777649D+02  0.4644814D+02
+ d(alpha)/dy  -0.4097434D+02  0.1341371D+03  0.2683270D+03  0.2918870D+02
+ d(alpha)/dz   0.4732600D+02 -0.1577109D+03 -0.2636715D+03  0.2953981D+03
+
+  ATOM           25 ag          26 ag          27 ag          28 ag
+ d(alpha)/dx  -0.1490709D+05 -0.1380341D+04  0.2215318D+06 -0.2156239D+06
+ d(alpha)/dy  -0.4967122D+05  0.1771514D+06  0.1647037D+06  0.9093493D+04
+ d(alpha)/dz  -0.1626575D+06 -0.1591545D+06  0.5323419D+05 -0.2817571D+05
+
+  ATOM           29 ag          30 ag          31 ag          32 ag
+ d(alpha)/dx   0.6519281D+05  0.2590804D+06  0.1084572D+06  0.5328150D+05
+ d(alpha)/dy  -0.2071489D+06 -0.1125086D+06 -0.1630647D+06  0.7826777D+05
+ d(alpha)/dz  -0.1092211D+06  0.2618394D+06 -0.3839657D+06  0.2109762D+06
+
+  ATOM           33 ag          34 ag          35 ag          36 ag
+ d(alpha)/dx   0.1738104D+06 -0.3506562D+06  0.3431695D+05  0.2430848D+05
+ d(alpha)/dy   0.1549522D+06  0.2857494D+06 -0.1535131D+06  0.2848966D+05
+ d(alpha)/dz   0.3766294D+06 -0.4092771D+06  0.9916324D+05 -0.1789451D+06
+
+  ATOM           37 ag          38 ag          39 ag          40 ag
+ d(alpha)/dx  -0.9988818D+04 -0.8554797D+05  0.1962770D+06 -0.1249303D+06
+ d(alpha)/dy  -0.1292685D+06 -0.7873452D+05  0.2428700D+06  0.9993424D+05
+ d(alpha)/dz   0.1004618D+06  0.2704531D+06 -0.3306712D+06 -0.5919505D+05
+
+  ATOM           41 c           42 n           43 c           44 c 
+ d(alpha)/dx   0.1891453D+01 -0.1051948D+03 -0.1054191D+02  0.1631024D+03
+ d(alpha)/dy   0.6717329D+02 -0.6578752D+02  0.1469088D+03 -0.9995327D+02
+ d(alpha)/dz   0.4467162D+02 -0.7007628D+02 -0.8998494D+02  0.4332110D+02
+
+  ATOM           45 c           46 c           47 c           48 c 
+ d(alpha)/dx  -0.6784665D+02  0.8003707D+01  0.2300468D+03 -0.1712872D+03
+ d(alpha)/dy  -0.9445760D+01  0.1726880D+03 -0.1527361D+03 -0.8429055D+02
+ d(alpha)/dz   0.1294807D+03 -0.1615468D+03 -0.1289444D+03 -0.7225091D+02
+
+  ATOM           49 c           50 n           51 c           52 c 
+ d(alpha)/dx   0.4659302D+01 -0.1767869D+03  0.1658153D+03 -0.1640060D+03
+ d(alpha)/dy   0.3722602D+02 -0.1108792D+03  0.1169763D+03 -0.2427024D+02
+ d(alpha)/dz   0.6283580D+02  0.1120140D+03  0.5065083D+02  0.5226257D+02
+
+  ATOM           53 c           54 c           55 n           56 c 
+ d(alpha)/dx   0.8752088D+02 -0.2735904D+03  0.1483540D+03  0.8976209D+02
+ d(alpha)/dy   0.4085898D+02 -0.6182004D+02  0.4687490D+02 -0.5225135D+01
+ d(alpha)/dz  -0.3347224D+02 -0.7947320D+02 -0.8694176D+02 -0.2474380D+02
+
+  ATOM           57 c           58 c           59 c           60 s 
+ d(alpha)/dx   0.5282693D+02  0.2212319D+02 -0.3326053D+02  0.7061897D+02
+ d(alpha)/dy   0.8535450D+02 -0.2151470D+02 -0.8613050D+02  0.5974396D+02
+ d(alpha)/dz   0.3736472D+01  0.2564124D+02  0.1260488D+03 -0.7535419D+02
+
+  ATOM           61 h           62 h           63 h           64 h 
+ d(alpha)/dx   0.8261867D+01  0.7837951D+01  0.5655722D+01  0.5437597D+01
+ d(alpha)/dy  -0.3011187D+02 -0.1515652D+02  0.8045395D+00 -0.3715905D+01
+ d(alpha)/dz  -0.3929707D+02 -0.9507623D+01  0.2175023D+01  0.6670268D+01
+
+  ATOM           65 h           66 h           67 h           68 h 
+ d(alpha)/dx  -0.6100810D+01 -0.3224281D+02  0.5864994D+01  0.7355484D+01
+ d(alpha)/dy  -0.1246179D+02 -0.1666615D+02  0.6675481D+01  0.6045559D+01
+ d(alpha)/dz   0.2677352D+02  0.8850349D+02 -0.2044056D+02 -0.1711587D+01
+
+  ATOM           69 h           70 h           71 h           72 h 
+ d(alpha)/dx   0.2287905D+01 -0.5352065D+00  0.1565761D+01 -0.2923911D+02
+ d(alpha)/dy  -0.1192241D+01  0.5450788D+01 -0.5684619D+01  0.3367258D+01
+ d(alpha)/dz   0.1855244D+01 -0.1525418D+02  0.2832692D+01  0.5954917D+01
+
+  ATOM           73 h           74 h           75 h           76 h 
+ d(alpha)/dx  -0.1043167D+02 -0.8897872D+01 -0.1246462D+02 -0.2306369D+02
+ d(alpha)/dy  -0.1043830D+01  0.9033236D+01  0.8154406D+01 -0.3026180D+02
+ d(alpha)/dz  -0.9740995D+01  0.3444717D+02 -0.3137159D+02  0.8389822D+01
+
+  ATOM           77 h           78 h 
+ d(alpha)/dx   0.2248766D+02  0.3844500D+01
+ d(alpha)/dy  -0.1095766D+02 -0.4617952D+01
+ d(alpha)/dz   0.4089258D+02  0.1285827D+02
+ 
+                              --------------------
+                                 xz   component
+                              --------------------
+
+  ATOM            1 ag           2 ag           3 ag           4 ag
+ d(alpha)/dx  -0.8189117D+02  0.1277928D+03 -0.8415461D+02  0.2819650D+02
+ d(alpha)/dy   0.1095470D+03  0.1796930D+03  0.5409301D+02  0.3256474D+02
+ d(alpha)/dz  -0.5416031D+02  0.5674449D+02  0.4591716D+02 -0.5973539D+01
+
+  ATOM            5 ag           6 ag           7 ag           8 ag
+ d(alpha)/dx   0.7273621D+02  0.1776916D+03 -0.9754026D+02 -0.2209600D+02
+ d(alpha)/dy   0.1604776D+02 -0.7531554D+02 -0.8892896D+02 -0.9671373D+02
+ d(alpha)/dz  -0.3711970D+02  0.5691868D+02  0.6250800D+02 -0.2127653D+02
+
+  ATOM            9 ag          10 ag          11 ag          12 ag
+ d(alpha)/dx   0.2484891D+02  0.1043474D+03  0.3610598D+02 -0.6657850D+02
+ d(alpha)/dy  -0.5101470D+02 -0.9335049D+02  0.4174283D+02 -0.1191477D+02
+ d(alpha)/dz   0.1834675D+02  0.1280079D+03 -0.3357078D+01  0.3887968D+02
+
+  ATOM           13 ag          14 ag          15 ag          16 ag
+ d(alpha)/dx  -0.7178593D+01  0.8221223D+02 -0.1048186D+03 -0.8619297D+01
+ d(alpha)/dy  -0.4519760D+02  0.1120891D+03 -0.7530135D+02 -0.6751281D+02
+ d(alpha)/dz   0.3007338D+02  0.6230333D+02  0.2552216D+03  0.3470272D+02
+
+  ATOM           17 ag          18 ag          19 ag          20 ag
+ d(alpha)/dx  -0.7331842D+02  0.1604688D+03 -0.6733070D+02 -0.1671518D+03
+ d(alpha)/dy   0.1167033D+03  0.9262418D+01  0.2348046D+02 -0.4806213D+02
+ d(alpha)/dz   0.1219356D+03  0.1722252D+03  0.2847444D+02 -0.2571549D+03
+
+  ATOM           21 ag          22 ag          23 ag          24 ag
+ d(alpha)/dx   0.1440476D+02  0.5850619D+02 -0.1203768D+03  0.8421614D+02
+ d(alpha)/dy   0.1616465D+02 -0.7397013D+02 -0.8421504D+02 -0.3338383D+02
+ d(alpha)/dz  -0.1894845D+02  0.1786176D+02 -0.3792571D+02  0.4206345D+01
+
+  ATOM           25 ag          26 ag          27 ag          28 ag
+ d(alpha)/dx  -0.9634489D+05  0.4100901D+05 -0.2522686D+04 -0.2729076D+05
+ d(alpha)/dy   0.2022128D+05 -0.1571649D+06 -0.2653828D+06  0.2867453D+05
+ d(alpha)/dz   0.1039818D+05  0.1076676D+06 -0.1897920D+06  0.6967053D+05
+
+  ATOM           29 ag          30 ag          31 ag          32 ag
+ d(alpha)/dx   0.1132842D+06 -0.1603689D+06  0.2783975D+06 -0.2592827D+06
+ d(alpha)/dy   0.1045767D+06  0.3515977D+06  0.2185544D+06 -0.9564522D+05
+ d(alpha)/dz   0.4369995D+04 -0.7951637D+05  0.1185086D+05 -0.8849539D+04
+
+  ATOM           33 ag          34 ag          35 ag          36 ag
+ d(alpha)/dx  -0.1010229D+06 -0.9916627D+05 -0.1012308D+06  0.2790424D+06
+ d(alpha)/dy  -0.1649231D+06 -0.2549472D+06 -0.3859082D+05  0.9991178D+05
+ d(alpha)/dz  -0.2963432D+06 -0.2023352D+04 -0.2030886D+06  0.1751462D+06
+
+  ATOM           37 ag          38 ag          39 ag          40 ag
+ d(alpha)/dx  -0.3897672D+05  0.9370660D+05 -0.5360063D+05 -0.1001390D+06
+ d(alpha)/dy   0.9245322D+05  0.1090342D+06 -0.2591929D+06 -0.1276090D+06
+ d(alpha)/dz   0.3808187D+05 -0.5357890D+05  0.1670910D+06  0.9749443D+05
+
+  ATOM           41 c           42 n           43 c           44 c 
+ d(alpha)/dx   0.1547516D+02  0.1271652D+02  0.2890573D+02 -0.1137701D+03
+ d(alpha)/dy  -0.3709823D+02  0.2107770D+02 -0.2391165D+02  0.2669069D+02
+ d(alpha)/dz  -0.3634448D+02  0.1600278D+02  0.2193929D+01 -0.5944015D+02
+
+  ATOM           45 c           46 c           47 c           48 c 
+ d(alpha)/dx   0.1456590D+03 -0.2027173D+03 -0.2242470D+03  0.1915843D+03
+ d(alpha)/dy  -0.4697282D+02 -0.2095957D+03  0.9123248D+02  0.1543002D+03
+ d(alpha)/dz   0.5433989D+02  0.4778097D+02  0.1170766D+03  0.1386334D+03
+
+  ATOM           49 c           50 n           51 c           52 c 
+ d(alpha)/dx  -0.2103628D+00  0.2407716D+03 -0.2531732D+03  0.9766402D+02
+ d(alpha)/dy  -0.8108323D+01  0.6278861D+02 -0.1530312D+03  0.1260070D+02
+ d(alpha)/dz  -0.1226513D+03 -0.3631736D+02 -0.5148444D+02 -0.1055201D+03
+
+  ATOM           53 c           54 c           55 n           56 c 
+ d(alpha)/dx  -0.3385810D+02  0.1840521D+03 -0.2563205D+02 -0.6471177D+02
+ d(alpha)/dy   0.2134927D+02  0.4298373D+02  0.3794520D+02 -0.2231004D+02
+ d(alpha)/dz   0.4265055D+01  0.1671974D+02  0.3253812D+02 -0.1308647D+01
+
+  ATOM           57 c           58 c           59 c           60 s 
+ d(alpha)/dx  -0.3470833D+02 -0.7152895D+02  0.1685608D+03 -0.2352558D+02
+ d(alpha)/dy  -0.1205344D+03 -0.2133573D+02  0.2180226D+02 -0.4309378D+00
+ d(alpha)/dz   0.1935518D+02  0.2169369D+02 -0.4162776D+01 -0.1891008D+03
+
+  ATOM           61 h           62 h           63 h           64 h 
+ d(alpha)/dx   0.2575931D+01 -0.7322355D+01  0.3196058D+01  0.9211514D+00
+ d(alpha)/dy   0.1594557D+02 -0.1195180D+01 -0.1481545D+01 -0.3752200D+00
+ d(alpha)/dz   0.4070323D+02  0.3307469D+01 -0.1062034D+01 -0.1878166D+01
+
+  ATOM           65 h           66 h           67 h           68 h 
+ d(alpha)/dx   0.7899570D+00  0.3772405D+00 -0.1243312D+02 -0.4181202D+01
+ d(alpha)/dy   0.1136895D+02  0.6532466D+01  0.7219270D+01 -0.1157208D+02
+ d(alpha)/dz   0.4671009D+01  0.9068685D+01 -0.1827489D+02 -0.1322663D+02
+
+  ATOM           69 h           70 h           71 h           72 h 
+ d(alpha)/dx  -0.9589665D+00 -0.2158577D+01  0.1863236D+01  0.3162085D+02
+ d(alpha)/dy   0.4461846D+01 -0.4777369D+01  0.3240559D+01 -0.9740604D+01
+ d(alpha)/dz  -0.5296993D+01  0.1781786D+02 -0.7193441D+01  0.5684073D+01
+
+  ATOM           73 h           74 h           75 h           76 h 
+ d(alpha)/dx   0.1255993D+02  0.1232466D+02  0.8852832D+01  0.1107380D+02
+ d(alpha)/dy   0.2813609D+01 -0.1483642D+02  0.4923232D+01  0.3772535D+02
+ d(alpha)/dz   0.1627724D+02 -0.1003580D+02  0.2546581D+02 -0.1609429D+02
+
+  ATOM           77 h           78 h 
+ d(alpha)/dx  -0.2698352D+02  0.4521757D+01
+ d(alpha)/dy   0.4811466D+02  0.8273116D+01
+ d(alpha)/dz  -0.6396077D+02 -0.1381991D+02
+ 
+                              --------------------
+                                 yz   component
+                              --------------------
+
+  ATOM            1 ag           2 ag           3 ag           4 ag
+ d(alpha)/dx   0.6614554D+01 -0.6020145D+01  0.3987117D+02  0.1980055D+02
+ d(alpha)/dy   0.4191975D+00  0.1263337D+03  0.8977100D+02 -0.2052904D+02
+ d(alpha)/dz  -0.9409325D+01  0.3720683D+01 -0.2916447D+02 -0.5208415D+02
+
+  ATOM            5 ag           6 ag           7 ag           8 ag
+ d(alpha)/dx  -0.5663263D+02  0.7277947D+02 -0.2964334D+01 -0.8097164D+02
+ d(alpha)/dy   0.5657503D+02 -0.1083889D+03 -0.3345389D+02  0.1401631D+02
+ d(alpha)/dz  -0.7297651D+02 -0.3254734D+02 -0.2874529D+02  0.1428666D+01
+
+  ATOM            9 ag          10 ag          11 ag          12 ag
+ d(alpha)/dx   0.1111782D+03  0.5654327D+02  0.9404685D+02 -0.6880401D+01
+ d(alpha)/dy  -0.2579887D+01 -0.1236611D+02  0.5262608D+02 -0.3884018D+02
+ d(alpha)/dz  -0.2773042D+02 -0.2104516D+02  0.1709199D-01 -0.8674477D+02
+
+  ATOM           13 ag          14 ag          15 ag          16 ag
+ d(alpha)/dx   0.4074540D+02 -0.8802420D+02 -0.5141743D+02  0.1270444D+01
+ d(alpha)/dy   0.7926328D+01  0.8691233D+02 -0.9714909D+02 -0.3959807D+02
+ d(alpha)/dz  -0.1452499D+02 -0.1104616D+02  0.1153604D+03 -0.2835786D+02
+
+  ATOM           17 ag          18 ag          19 ag          20 ag
+ d(alpha)/dx   0.3746628D+02  0.5672877D+02 -0.6578218D+02 -0.1024507D+03
+ d(alpha)/dy   0.1299823D+03 -0.9486332D+02  0.2813716D+01  0.8541419D+02
+ d(alpha)/dz   0.7415297D+02  0.1066822D+02 -0.1079129D+02 -0.9228467D+02
+
+  ATOM           21 ag          22 ag          23 ag          24 ag
+ d(alpha)/dx   0.8371279D+02 -0.6944573D+02 -0.4661788D+02  0.4070265D+02
+ d(alpha)/dy  -0.7160063D+01 -0.1495783D+02 -0.5327181D+02 -0.1115096D+03
+ d(alpha)/dz  -0.1111324D+02 -0.4335230D+02 -0.4236563D+02  0.2130514D+02
+
+  ATOM           25 ag          26 ag          27 ag          28 ag
+ d(alpha)/dx  -0.5816160D+04 -0.6204972D+05 -0.1053191D+05  0.9799001D+05
+ d(alpha)/dy  -0.8314529D+04 -0.5068782D+05 -0.5942347D+05 -0.4435664D+05
+ d(alpha)/dz  -0.3217529D+05 -0.8449934D+05 -0.1042469D+06 -0.6924574D+05
+
+  ATOM           29 ag          30 ag          31 ag          32 ag
+ d(alpha)/dx   0.2692044D+05 -0.4931265D+05  0.7881741D+05 -0.4125604D+05
+ d(alpha)/dy  -0.3125531D+05  0.1136034D+06 -0.2146283D+06 -0.9655599D+05
+ d(alpha)/dz  -0.4750827D+05  0.1196467D+05  0.9458683D+05 -0.5932574D+05
+
+  ATOM           33 ag          34 ag          35 ag          36 ag
+ d(alpha)/dx   0.1030230D+06 -0.2591551D+06  0.1889585D+06  0.1611770D+06
+ d(alpha)/dy  -0.1941327D+05  0.1789698D+06  0.1894972D+06  0.7931715D+05
+ d(alpha)/dz   0.1585576D+04  0.1067002D+06  0.2133172D+06 -0.8693183D+05
+
+  ATOM           37 ag          38 ag          39 ag          40 ag
+ d(alpha)/dx   0.1705893D+05 -0.4550666D+05  0.4945152D+05 -0.8310891D+05
+ d(alpha)/dy  -0.4662615D+05 -0.7725057D+04 -0.1337545D+06 -0.1197861D+06
+ d(alpha)/dz  -0.6251467D+04 -0.2523044D+05  0.2376693D+05  0.2469813D+05
+
+  ATOM           41 c           42 n           43 c           44 c 
+ d(alpha)/dx   0.2472732D+02  0.1441032D+03  0.3884668D+02 -0.1147734D+03
+ d(alpha)/dy  -0.4289027D+01 -0.1220940D+03  0.7441145D+02  0.1136293D+03
+ d(alpha)/dz   0.4079193D+01 -0.3123932D+02 -0.2140832D+02  0.2513308D+02
+
+  ATOM           45 c           46 c           47 c           48 c 
+ d(alpha)/dx   0.3530100D+02  0.4946455D+02  0.1886612D+03 -0.1710852D+03
+ d(alpha)/dy  -0.1998849D+02  0.1555377D+03 -0.1030546D+03 -0.1511680D+02
+ d(alpha)/dz   0.6775556D+01  0.7120197D+02 -0.8374208D+02 -0.4355118D+02
+
+  ATOM           49 c           50 n           51 c           52 c 
+ d(alpha)/dx   0.1108683D+03 -0.1571305D+02 -0.1792785D+03  0.1969013D+03
+ d(alpha)/dy  -0.8128833D+02  0.2033729D+03 -0.3260931D+02  0.7628706D+01
+ d(alpha)/dz   0.6255622D+02  0.8299887D+02 -0.1303091D+02  0.5400829D+00
+
+  ATOM           53 c           54 c           55 n           56 c 
+ d(alpha)/dx  -0.1647795D+03  0.2300347D+03 -0.1910202D+03  0.9983807D+01
+ d(alpha)/dy  -0.1544547D+03  0.2057240D+03 -0.7421754D+02 -0.8924419D+02
+ d(alpha)/dz   0.4229835D+02  0.1408786D+02 -0.5503132D+02  0.1193940D+02
+
+  ATOM           57 c           58 c           59 c           60 s 
+ d(alpha)/dx  -0.5433657D+02 -0.1767534D+02 -0.9623980D+02 -0.1812010D+02
+ d(alpha)/dy  -0.2369169D+01  0.3705067D+02  0.1014012D+03 -0.1896599D+03
+ d(alpha)/dz   0.5330572D+01 -0.8593470D+02 -0.2678963D+02  0.3930355D+02
+
+  ATOM           61 h           62 h           63 h           64 h 
+ d(alpha)/dx  -0.1489037D+02 -0.1430283D+02 -0.1949013D+01 -0.5383167D+01
+ d(alpha)/dy  -0.9668469D+01  0.4496121D+01  0.7719814D-03  0.3154391D+01
+ d(alpha)/dz  -0.9075770D+01 -0.1866392D+02  0.4115225D+01  0.5323412D+01
+
+  ATOM           65 h           66 h           67 h           68 h 
+ d(alpha)/dx  -0.1611939D+02 -0.4553329D+01 -0.4260977D+01 -0.2076991D+01
+ d(alpha)/dy   0.1142474D+01 -0.1125147D+01 -0.6094585D+01  0.4179353D+00
+ d(alpha)/dz   0.9329662D+01  0.4267469D+02 -0.4141671D+01  0.6874038D+01
+
+  ATOM           69 h           70 h           71 h           72 h 
+ d(alpha)/dx   0.6669623D+01  0.3790088D+01 -0.2723176D+01  0.1462270D+02
+ d(alpha)/dy   0.1245196D+01  0.7830716D+00  0.3766748D+01  0.2028558D+01
+ d(alpha)/dz  -0.9261742D+01  0.4499717D+01 -0.1863079D+02  0.5075194D+01
+
+  ATOM           73 h           74 h           75 h           76 h 
+ d(alpha)/dx   0.1506656D+01  0.1016552D+02  0.3359845D+01 -0.3187710D+01
+ d(alpha)/dy  -0.3558054D+00 -0.5562900D+00  0.9840668D+00  0.1629794D+02
+ d(alpha)/dz   0.5438127D+01  0.1087123D+02  0.5863699D+01  0.8668795D+01
+
+  ATOM           77 h           78 h 
+ d(alpha)/dx  -0.6846754D+01  0.4475145D+01
+ d(alpha)/dy   0.1567660D+02 -0.1391179D+02
+ d(alpha)/dz  -0.8401971D+01  0.2050905D+02
+ 
+
+   *** electronic polarizability derivatives written onto file control ***
+
+
+
+    ------------------------------------------------------------------------
+         total  cpu-time :  5 hours 24 minutes and  9 seconds
+         total wall-time :  1 hours 24 minutes and  6 seconds
+    ------------------------------------------------------------------------
+
+   ****  egrad : all done  ****
+
+
+    2026-09-09 23:06:31.179 
+
