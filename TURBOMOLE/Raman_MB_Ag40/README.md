@@ -32,6 +32,10 @@ Download rman_a.zip.part1 and rman_a.zip.part2 into the same directory.
 
 Open Windows PowerShell in that directory and run:
 
+```powershell
+$parts = @("rman_a.zip.part1", "rman_a.zip.part2")
+```
+
 $parts = @("rman_a.zip.part1", "rman_a.zip.part2")
 $out = [IO.File]::Create("rman_a.zip")
 try {
